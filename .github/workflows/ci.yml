@@ -70,3 +70,44 @@ jobs:
 
       - name: Run tests
         run: mix test
+
+  bump-version:
+    name: Bump Version
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump patch version in mix.exs
+        run: |
+          CURRENT_VERSION=$(sed -n 's/.*version: "\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p' mix.exs | head -n 1)
+          if [ -z "$CURRENT_VERSION" ]; then
+            echo "Could not find semantic version in mix.exs"
+            exit 1
+          fi
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          NEXT_VERSION="${MAJOR}.${MINOR}.$((PATCH + 1))"
+
+          sed -i "s/version: \"$CURRENT_VERSION\"/version: \"$NEXT_VERSION\"/" mix.exs
+          echo "NEXT_VERSION=$NEXT_VERSION" >> "$GITHUB_ENV"
+
+      - name: Commit and push version bump
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mix.exs
+          git commit -m "chore: bump version to ${NEXT_VERSION} [skip ci]"
+          git push
