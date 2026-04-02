@@ -75,4 +75,3 @@ Banking.get_transfer(transfer.id)
 ## Observações
 
 - Este projeto foi escrito para ser simples e direto, mantendo consistência sob concorrência.
-- Como o ambiente atual não tem `mix` instalado, não consegui executar `mix test` aqui.
