@@ -1,5 +1,4 @@
 defmodule BankCrud do
-
   alias BankCrud.Banking
 
   defdelegate list_accounts, to: Banking
