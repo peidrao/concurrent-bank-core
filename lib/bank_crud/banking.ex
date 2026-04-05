@@ -18,7 +18,7 @@ defmodule BankCrud.Banking do
           | :account_not_active
 
   def list_accounts do
-    Repo.all(from a in Account, order_by: [asc: a.inserted_at])
+    Repo.all(from(a in Account, order_by: [asc: a.inserted_at]))
   end
 
   def get_account(id), do: Repo.get(Account, id)
@@ -110,9 +110,10 @@ defmodule BankCrud.Banking do
 
   def list_transfers do
     Repo.all(
-      from t in Transfer,
+      from(t in Transfer,
         preload: [:from_account, :to_account],
         order_by: [desc: t.inserted_at]
+      )
     )
   end
 
