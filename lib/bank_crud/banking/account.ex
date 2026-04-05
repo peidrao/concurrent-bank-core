@@ -6,12 +6,12 @@ defmodule BankCrud.Banking.Account do
   @foreign_key_type :binary_id
 
   schema "accounts" do
-    field :number, :string
-    field :holder_name, :string
-    field :currency, :string, default: "BRL"
-    field :balance, :decimal, default: Decimal.new("0.00")
-    field :status, :string, default: "active"
-    field :lock_version, :integer, default: 1
+    field(:number, :string)
+    field(:holder_name, :string)
+    field(:currency, :string, default: "BRL")
+    field(:balance, :decimal, default: Decimal.new("0.00"))
+    field(:status, :string, default: "active")
+    field(:lock_version, :integer, default: 1)
 
     timestamps(type: :utc_datetime_usec)
   end

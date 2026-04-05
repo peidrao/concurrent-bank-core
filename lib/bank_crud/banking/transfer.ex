@@ -6,12 +6,12 @@ defmodule BankCrud.Banking.Transfer do
   @foreign_key_type :binary_id
 
   schema "transfers" do
-    field :amount, :decimal
-    field :status, :string, default: "committed"
-    field :idempotency_key, :string
+    field(:amount, :decimal)
+    field(:status, :string, default: "committed")
+    field(:idempotency_key, :string)
 
-    belongs_to :from_account, BankCrud.Banking.Account
-    belongs_to :to_account, BankCrud.Banking.Account
+    belongs_to(:from_account, BankCrud.Banking.Account)
+    belongs_to(:to_account, BankCrud.Banking.Account)
 
     timestamps(type: :utc_datetime_usec)
   end
