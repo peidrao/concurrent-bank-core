@@ -5,3 +5,4 @@
 /.elixir_ls/
 *.ez
 .env
+/docs/
