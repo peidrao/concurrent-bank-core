@@ -53,7 +53,10 @@ defmodule BankCrud.BankingTest do
       )
       |> Enum.to_list()
 
-    assert Enum.all?(stream, fn {:ok, {:ok, _transfer}} -> true; _ -> false end)
+    assert Enum.all?(stream, fn
+             {:ok, {:ok, _transfer}} -> true
+             _ -> false
+           end)
 
     from_after = Banking.get_account(from.id)
     to_after = Banking.get_account(to.id)
