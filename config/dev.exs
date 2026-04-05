@@ -9,3 +9,14 @@ config :bank_crud, BankCrud.Repo,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: String.to_integer(System.get_env("DB_POOL_SIZE", "30"))
+
+config :bank_crud, BankCrudWeb.Endpoint,
+  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT", "4000"))],
+  secret_key_base:
+    System.get_env(
+      "SECRET_KEY_BASE",
+      "Wm8xQmVEVjk3R0x6R2h5UzlQY2xxWnE2T1RhMlVlZEhNZXFUQ2F4Y3hyRFMyQXN1VWQ2WQ=="
+    ),
+  check_origin: false,
+  debug_errors: true,
+  code_reloader: false
