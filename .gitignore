@@ -6,3 +6,5 @@
 *.ez
 .env
 /docs/
+
+.codex
