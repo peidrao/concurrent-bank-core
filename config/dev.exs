@@ -16,7 +16,11 @@ config :bank_crud, BankCrudWeb.Endpoint,
     System.get_env(
       "SECRET_KEY_BASE",
       "Wm8xQmVEVjk3R0x6R2h5UzlQY2xxWnE2T1RhMlVlZEhNZXFUQ2F4Y3hyRFMyQXN1VWQ2WQ=="
-    ),
+    )
+
+config :bank_crud, AuthMe.UserManager.Guardian,
+  issuer: "bank_crud",
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY"),
   check_origin: false,
   debug_errors: true,
   code_reloader: false
