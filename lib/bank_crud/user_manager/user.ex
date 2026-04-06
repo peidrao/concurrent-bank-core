@@ -6,8 +6,10 @@ defmodule BankCrud.UserManager.User do
   @foreign_key_type :binary_id
 
   schema "users" do
-    field(:username, :string)
-    field(:password, :string)
+    field(:email, :string)
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
+    field(:name, :string)
 
     timestamps()
   end
@@ -15,15 +17,15 @@ defmodule BankCrud.UserManager.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :password])
-    |> validate_required([:username, :password])
+    |> cast(attrs, [:email, :password, :name])
+    |> validate_required([:email, :password])
     |> put_password_hash()
   end
 
   defp put_password_hash(
          %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
        ) do
-    change(changeset, password: Argon2.hash_pwd_salt(password))
+    change(changeset, password_hash: Argon2.hash_pwd_salt(password))
   end
 
   defp put_password_hash(changeset), do: changeset
