@@ -12,11 +12,7 @@ config :bank_crud, BankCrud.Repo,
 
 config :bank_crud, BankCrudWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT", "4000"))],
-  secret_key_base:
-    System.get_env(
-      "SECRET_KEY_BASE",
-      "Wm8xQmVEVjk3R0x6R2h5UzlQY2xxWnE2T1RhMlVlZEhNZXFUQ2F4Y3hyRFMyQXN1VWQ2WQ=="
-    )
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 config :bank_crud, AuthMe.UserManager.Guardian,
   issuer: "bank_crud",
