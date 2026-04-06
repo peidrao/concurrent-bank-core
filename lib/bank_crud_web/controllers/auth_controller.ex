@@ -3,7 +3,7 @@ defmodule BankCrudWeb.AuthController do
 
   alias BankCrud.UserManager
 
-  # action_fallback(BankCrud.FallbackController)
+  action_fallback(BankCrudWeb.FallbackController)
 
   # def login(conn, params) do
   #   with {:ok, user} <- UserManager.authenticate_user(params) do
