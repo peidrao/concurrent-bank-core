@@ -19,6 +19,9 @@ defmodule BankCrud.UserManager.User do
     user
     |> cast(attrs, [:email, :password, :name])
     |> validate_required([:email, :password])
+    |> validate_length(:password, min: 8)
+    |> unsafe_validate_unique(:email, BankCrud.Repo)
+    |> unique_constraint(:email)
     |> put_password_hash()
   end
 

@@ -23,7 +23,8 @@ defmodule BankCrudWeb.AuthController do
   defp user_payload(user) do
     %{
       id: user.id,
-      email: user.email
+      email: user.email,
+      name: user.name
     }
   end
 end
