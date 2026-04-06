@@ -102,8 +102,8 @@ defmodule BankCrud.UserManager do
     User.changeset(user, attrs)
   end
 
-  def authenticate_user(username, password) do
-    user = Repo.get_by(User, username: username)
+  def authenticate_user(email, password) do
+    user = Repo.get_by(User, email: email)
 
     cond do
       user && Argon2.verify_pass(password, user.password) ->
