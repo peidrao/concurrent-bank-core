@@ -24,6 +24,8 @@ defmodule BankCrud.MixProject do
       {:ecto_sql, "~> 3.12"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.4"},
+      {:guardian, "~> 2.4"},
+      {:argon2_elixir, "~> 4.1.3"},
       {:plug_cowboy, "~> 2.7"}
     ]
   end
