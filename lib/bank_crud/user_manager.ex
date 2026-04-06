@@ -101,4 +101,20 @@ defmodule BankCrud.UserManager do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  def authenticate_user(username, password) do
+    user = Repo.get_by(User, username: username)
+
+    cond do
+      user && Argon2.verify_pass(password, user.password) ->
+        {:ok, user}
+
+      user ->
+        {:error, :invalid_password}
+
+      true ->
+        Argon2.no_user_verify()
+        {:error, :not_found}
+    end
+  end
 end
