@@ -25,7 +25,7 @@ defmodule BankCrud.UserManagerTest do
 
       assert {:ok, %User{} = user} = UserManager.create_user(valid_attrs)
       assert user.username == "some username"
-      assert user.password == "some password"
+      assert Argon2.verify_pass("some password", user.password)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -38,7 +38,7 @@ defmodule BankCrud.UserManagerTest do
 
       assert {:ok, %User{} = user} = UserManager.update_user(user, update_attrs)
       assert user.username == "some updated username"
-      assert user.password == "some updated password"
+      assert Argon2.verify_pass("some updated password", user.password)
     end
 
     test "update_user/2 with invalid data returns error changeset" do
