@@ -12,7 +12,9 @@ defmodule BankCrud.UserManagerFixtures do
       attrs
       |> Enum.into(%{
         password: "some password",
-        username: "some username"
+        email: "some@email.com",
+        name: "some name"
+
       })
       |> BankCrud.UserManager.create_user()
 

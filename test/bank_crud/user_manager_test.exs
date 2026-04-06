@@ -12,20 +12,21 @@ defmodule BankCrud.UserManagerTest do
 
     test "list_users/0 returns all users" do
       user = user_fixture()
-      assert UserManager.list_users() == [user]
+      assert UserManager.list_users() == [%{user | password: nil}]
     end
 
     test "get_user!/1 returns the user with given id" do
       user = user_fixture()
-      assert UserManager.get_user!(user.id) == user
+      assert UserManager.get_user!(user.id) == %{user | password: nil}
     end
 
     test "create_user/1 with valid data creates a user" do
-      valid_attrs = %{username: "some username", password: "some password"}
+      valid_attrs = %{email: "some@email.com", password: "some password", name: "some name"}
 
       assert {:ok, %User{} = user} = UserManager.create_user(valid_attrs)
-      assert user.username == "some username"
-      assert Argon2.verify_pass("some password", user.password)
+      assert user.email == "some@email.com"
+      assert user.name == "some name"
+      assert Argon2.verify_pass("some password", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -34,17 +35,18 @@ defmodule BankCrud.UserManagerTest do
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
-      update_attrs = %{username: "some updated username", password: "some updated password"}
+      update_attrs = %{email: "some@updated.email", password: "some updated password", name: "some updated name"}
 
       assert {:ok, %User{} = user} = UserManager.update_user(user, update_attrs)
-      assert user.username == "some updated username"
-      assert Argon2.verify_pass("some updated password", user.password)
+      assert user.email == "some@updated.email"
+      assert user.name == "some updated name"
+      assert Argon2.verify_pass("some updated password", user.password_hash)
     end
 
     test "update_user/2 with invalid data returns error changeset" do
       user = user_fixture()
       assert {:error, %Ecto.Changeset{}} = UserManager.update_user(user, @invalid_attrs)
-      assert user == UserManager.get_user!(user.id)
+      assert %{user | password: nil} == UserManager.get_user!(user.id)
     end
 
     test "delete_user/1 deletes the user" do
