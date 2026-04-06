@@ -13,5 +13,7 @@ defmodule BankCrudWeb.Router do
     post("/accounts/:id/withdraw", AccountController, :withdraw)
 
     resources("/transfers", TransferController, only: [:index, :show, :create])
+
+    post("/users/create", AuthController, :create)
   end
 end
