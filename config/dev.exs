@@ -16,7 +16,7 @@ config :bank_crud, BankCrudWeb.Endpoint,
 
 config :bank_crud, AuthMe.UserManager.Guardian,
   issuer: "bank_crud",
-  secret_key: System.get_env("GUARDIAN_SECRET_KEY"),
+  secret_key: System.get_env("JWT_SECRET"),
   check_origin: false,
   debug_errors: true,
   code_reloader: false
